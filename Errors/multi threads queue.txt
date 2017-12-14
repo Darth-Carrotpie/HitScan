@@ -1,0 +1,3 @@
+code taken from this answer:
+https://reformatcode.com/code/python/tkinter-multiprocessing-on-events-that-happen-per-second
+works as an example, adapted and reused.

@@ -1,0 +1,5 @@
+If smth sais it cannot pickle a function, it means it cannot reach its arguments properly,
+cause most likely it uses Pipes or queues to send/recieve info.
+
+Just create a local function, which uses the required remote function, with proper arguments,
+and it will get pickled succesfully.

@@ -1,0 +1,7 @@
+/home/pi/Documents/HitScan
+
+
+chmod +x file-name.py    >>this will make python.py program an executable, to be able to run without writing Python
+
+temp humidity sensor:
+pi@raspberrypi:~/Adafruit_Python_DHT/examples $ sudo ./AdafruitDHT.py 2302 4

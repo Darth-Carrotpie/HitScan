@@ -1,0 +1,10 @@
+https://www.raspberrypi.org/forums/viewtopic.php?t=117254
+Are you using python2 or python3? 
+
+You have to install external libraries twice, once for each flavour of python.
+
+sudo python setup.py install
+will use python2
+
+sudo python3 setup.py install
+will install it for python3 (if it's compatible)
