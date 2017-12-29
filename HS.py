@@ -39,10 +39,12 @@ class MainClass(object):
         autoAreaLabel.grid(row=3, column=0)
 
         self.started = tk.BooleanVar()
-
+        self.bpm = tk.IntVar()
+        self.bpm.set(60)
+        self.delayPortion = tk.DoubleVar()
+        self.delayPortion.set(1)
         
-        
-        self.startButton=tk.Button(self.root, text = 'Start Hitting', font=myFont, command=self.startButton, bg='bisque2', height=1, width=12)
+        self.startButton=tk.Button(self.root, text = 'Start Hitting', font=myFont, command=self.startButton, bg='bisque2', height=1, width=8)
         self.startButton.grid(row=4, sticky=tk.W)
 
         #App specific:
@@ -58,16 +60,33 @@ class MainClass(object):
 
         # start polling the queue
         self.poll_queue()
+        self.cycling()
         
     def startButton(self):
-        self.started = not self.started
         #print(self.started)
         if self.started:
             self.startButton.grid(row=4, sticky=tk.E)
             self.startButton["text"] = 'Stop Hitting'
         else:
             self.startButton.grid(row=4, sticky=tk.W)
-            self.startButton["text"] = 'Start Hitting'
+            self.startButton["text"] = 'Start Hitting'        
+        self.started = not self.started
+       
+    def cycling(self):
+        while self.started:
+            betweenBeatsFlat = 60 / self.bpm.get()
+            delay = betweenBeatsFlat * self.delayPortion.get()
+            betweenBeats = int(1000 * betweenBeatsFlat/(betweenBeatsFlat+delay))
+            self.cycle()
+            self.root.after(betweenBeats)
+        
+    def cycle(self):
+        self.setState(True)
+        betweenBeatsFlat = 60 / self.bpm.get()
+        delayFlat = betweenBeatsFlat * self.delayPortion.get()
+        delay = int(1000 * delayFlat/(betweenBeatsFlat+delayFlat))
+        self.root.after(delay)
+        self.setState(False)
         
     def setState(self, extend):
         if extend:
@@ -100,7 +119,8 @@ class MainClass(object):
             #output = 'Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(self.varT, self.varH)
             self.var.set('Temp={0:0.1f}*C   Humidity={1:0.1f}%'.format(message["temperature"], message["humidity"]))
             #self.varH.set(message["humidity"])
-        self.root.after(500, self.poll_queue)
+            self.root.after(100, self.poll_queue)
+        
     def exitProgram(self):
         self.sensor.stop()
         self.root.quit()
@@ -108,3 +128,5 @@ class MainClass(object):
 if __name__ == "__main__":
     app = MainClass()
     app.start()
+
+
