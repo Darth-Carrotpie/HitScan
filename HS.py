@@ -15,11 +15,6 @@ class MainClass(object):
         
         myFont=tkinter.font.Font(family='Helvetica', size = 12, weight = "bold")
         
-        #self.led1 = LED(21)
-        #self.led1.on()
-        #self.led2 = LED(20)
-        #self.led2.on()
-        
         self.var = tk.StringVar()
         
         value = tk.Label(self.root, textvariable=self.var, width=30)
@@ -48,14 +43,8 @@ class MainClass(object):
         #App specific:
         exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='cyan', height=1, width=6)
         exitButton.grid(row=5, sticky=tk.E)
-        
-        # create a queue for communication
-        self.queue = queue.Queue()
-        # create some sensors
-        #self.sensor = sns.THSensor(self)
-        #self.relayThread = threading.Thread(target=self.cycling, args=())
-        # start polling the queue
-        self.poll_queue()
+
+        self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
 
     #this loops the GUI    
@@ -74,26 +63,10 @@ class MainClass(object):
             
     def start(self):
         self.refresh()
-        #self.cycling()
-
-        # start the sensors
-        #self.sensor.start()
-        #self.relayThread.start()
         # start the GUI loop
-        self.root.mainloop()
-
-        # wait for the threads to finish
-        #self.sensor.stop()
-        #self.sensor.join()
-        
-    def poll_queue(self):
-        if not self.queue.empty():
-            message = self.queue.get()
-            self.var.set('Temp={0:0.1f}*C   Humidity={1:0.1f}%'.format(message["temperature"], message["humidity"]))
-            self.root.after(100, self.poll_queue)
-        
+        self.root.mainloop()        
+      
     def exitProgram(self):
-        #self.sensor.stop()
         self.root.quit()
 
 if __name__ == "__main__":
