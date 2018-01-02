@@ -4,7 +4,7 @@ import threading
 import queue
 import time
 from gpiozero import LED
-import Sensors as sns
+import sensors as sns
 import finger as fng
 class MainClass(object):
 
@@ -37,7 +37,6 @@ class MainClass(object):
         autoAreaLabel = tk.Label(self.root, text = 'Set Automatic Hit Cycle:')
         autoAreaLabel.grid(row=3, column=0)
 
-
         self.bpm = tk.IntVar()
         self.bpm.set(60)
         self.delayPortion = tk.DoubleVar()
@@ -53,8 +52,7 @@ class MainClass(object):
         # create a queue for communication
         self.queue = queue.Queue()
         # create some sensors
-        self.sensor = sns.THSensor(self.queue)
-        self.sensor.setName("SensorT&H")
+        #self.sensor = sns.THSensor(self)
         #self.relayThread = threading.Thread(target=self.cycling, args=())
         # start polling the queue
         self.poll_queue()
@@ -95,7 +93,7 @@ class MainClass(object):
             self.root.after(100, self.poll_queue)
         
     def exitProgram(self):
-        self.sensor.stop()
+        #self.sensor.stop()
         self.root.quit()
 
 if __name__ == "__main__":
