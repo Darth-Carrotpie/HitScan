@@ -16,8 +16,8 @@ class THSensor(threading.Thread):
         while not exit_flag.wait(timeout=1):
             print('read')
             if self.stop_requested:
+                print('sensor cycle broke;')
                 break
-            ##            value = random.randint(10, 100)
             humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 4)
             if temperature is not None and humidity is not None:
                 temperature = float(temperature)
