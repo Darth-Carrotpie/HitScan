@@ -42,10 +42,10 @@ class MainClass(object):
         autoAreaLabel = tk.Label(self.root, text = 'Set Automatic Hit Cycle:')
         autoAreaLabel.grid(row=3, column=0)
 
-        self.bpm = tk.IntVar()
-        self.bpm.set(60)
+        self.bpm = tk.DoubleVar()
+        self.bpm.set(120)
         self.delayPortion = tk.DoubleVar()
-        self.delayPortion.set(1)
+        self.delayPortion.set(0.5)
         
         self.startButton=tk.Button(self.root, text = 'Start Hitting', font=myFont, command=self.startButton, bg='OliveDrab1', height=1, width=8)
         self.startButton.grid(row=4, sticky=tk.W)
@@ -59,12 +59,12 @@ class MainClass(object):
         autoAreaLabel = tk.Label(self.inputFrame, text = 'BPM:')
         autoAreaLabel.grid(row=0, column=0)
         #autoAreaLabel.place(relx=.0, rely=.5, anchor="w")
-        self.bpmInput = tk.Entry(self.inputFrame, validate = 'key', validatecommand = vcmd, width=7)
+        self.bpmInput = tk.Entry(self.inputFrame, textvariable=self.bpm, validate = 'key', validatecommand = vcmd, width=7)
         self.bpmInput.grid(row=0, column=1, sticky=tk.NSEW)
         
         autoAreaLabel = tk.Label(self.inputFrame, text = 'U/D:')
         autoAreaLabel.grid(row=0, column=3)        
-        self.speedInput = tk.Entry(self.inputFrame, validate = 'key', validatecommand = vcmd, width=7)
+        self.speedInput = tk.Entry(self.inputFrame, textvariable=self.delayPortion, validate = 'key', validatecommand = vcmd, width=7)
         self.speedInput.grid(row=0, column=4, sticky=tk.NSEW)
         
         #App specific:
@@ -80,7 +80,7 @@ class MainClass(object):
             try:
                 float(value_if_allowed)
                 return True
-            except ValueError:
+            except:
                 return False
         else:
             return False
@@ -92,15 +92,20 @@ class MainClass(object):
         
     def startButton(self):
         self.started.set (not self.started.get())
-        print(self.started.get())
+        #print(self.started.get())
         if self.started.get():
             self.startButton.grid(row=4, sticky=tk.E)
             self.startButton["text"] = 'Stop Hitting'
             self.startButton["bg"] = 'tomato'
+            if not self.bpm.get():
+                self.bpm.set(120)
+            if not self.delayPortion.get():
+                self.delayPortion.set(0.5)
         else:
             self.startButton.grid(row=4, sticky=tk.W)
             self.startButton["text"] = 'Start Hitting'
             self.startButton["bg"] = 'OliveDrab1'
+
             
     def start(self):
         self.refresh()
