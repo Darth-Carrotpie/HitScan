@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 import tkinter as tk
 import tkinter.font
-import threading
-import queue
-import time
-from gpiozero import LED
 import sensors as sns
 import finger as fng
 class MainClass(object):
@@ -15,13 +11,20 @@ class MainClass(object):
         self.started.set(False)
         
         myFont=tkinter.font.Font(family='Helvetica', size = 12, weight = "bold")
+        textFont=tkinter.font.Font(family='Helvetica', size = 6, weight = "normal")
         
         self.var = tk.StringVar()
-        
-        value = tk.Label(self.root, textvariable=self.var, width=30)
-
+        value = tk.Label(self.root, textvariable=self.var, width=30, font=textFont)
         value.grid(row=0, column=1)
+        
+        self.pressureVar = tk.StringVar()
+        pressureLabel = tk.Label(self.root, textvariable=self.pressureVar, font=textFont)
+        pressureLabel.grid(row=1, column=1)
 
+        self.extraDataVar = tk.StringVar()
+        extraLabel = tk.Label(self.root, textvariable=self.extraDataVar, font=textFont)
+        extraLabel.grid(row=6, column=1,sticky=tk.W)
+        
         self.fingerExtended = tk.BooleanVar()
 
         #self.frame1.pack_propagate(False)
@@ -69,7 +72,7 @@ class MainClass(object):
         self.speedInput.grid(row=0, column=4, sticky=tk.NSEW)
         
         #App specific:
-        exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='CadetBlue4', height=1, width=6)
+        exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='CadetBlue4', height=1, width=3)
         exitButton.grid(row=6, column=1, sticky=tk.E)
 
         self.sensor = sns.THSensor(self)
