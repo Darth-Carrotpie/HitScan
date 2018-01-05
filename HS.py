@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import tkinter as tk
 import tkinter.font
 import threading
@@ -26,21 +27,21 @@ class MainClass(object):
         #self.frame1.pack_propagate(False)
         
         #Sensor button
-        readSensorButton=tk.Button(self.root, text = 'Read Sensors', font=myFont, command=lambda:self.sensor.updateData(self), bg='bisque2', height=1, width=15)
-        readSensorButton.grid(row=0, column=0, sticky=tk.NSEW)
+        readSensorButton=tk.Button(self.root, text = 'Read Sensors', font=myFont, command=lambda:self.sensor.updateData(self), bg='DarkSeaGreen1', height=1, width=15)
+        readSensorButton.grid(row=0, column=0, rowspan=2, sticky=tk.NSEW)
         
         #Valve Manual Manipulation Buttons:
-        ledButton=tk.Button(self.root, text = 'Pull', font=myFont, command=lambda:self.finger.setState(self, False), bg='bisque2', height=1, width=15)
-        ledButton.grid(row=1, column=0, sticky=tk.NSEW)
-        ledButton=tk.Button(self.root, text = 'Push', font=myFont, command=lambda:self.finger.setState(self, True), bg='bisque2', height=1, width=15)
+        ledButton=tk.Button(self.root, text = 'Pull', font=myFont, command=lambda:self.finger.setState(self, False), bg='DarkSeaGreen1', height=1, width=15)
         ledButton.grid(row=2, column=0, sticky=tk.NSEW)
+        ledButton=tk.Button(self.root, text = 'Push', font=myFont, command=lambda:self.finger.setState(self, True), bg='DarkSeaGreen1', height=1, width=15)
+        ledButton.grid(row=3, column=0, sticky=tk.NSEW)
         
-        singleCycle=tk.Button(self.root, text = 'Single Hit', font=myFont, command=lambda:self.finger.cycle(self), bg='bisque2', height=2, width=15)
-        singleCycle.grid(row=1, column=1, rowspan=2, sticky=tk.NSEW)
+        singleCycle=tk.Button(self.root, text = 'Single Hit', font=myFont, command=lambda:self.finger.cycle(self), bg='DarkSeaGreen1', height=2, width=15)
+        singleCycle.grid(row=2, column=1, rowspan=2, sticky=tk.NSEW)
 
         #Valve Auto
         autoAreaLabel = tk.Label(self.root, text = 'Set Automatic Hit Cycle:')
-        autoAreaLabel.grid(row=3, column=0)
+        autoAreaLabel.grid(row=4, column=0)
 
         self.bpm = tk.DoubleVar()
         self.bpm.set(120)
@@ -48,11 +49,11 @@ class MainClass(object):
         self.delayPortion.set(0.5)
         
         self.startButton=tk.Button(self.root, text = 'Start Hitting', font=myFont, command=self.startButton, bg='OliveDrab1', height=1, width=8)
-        self.startButton.grid(row=4, sticky=tk.W)
+        self.startButton.grid(row=5, sticky=tk.W)
 
         #Valve Auto Input
         self.inputFrame = tk.Frame(self.root, highlightbackground="green", highlightcolor="green", highlightthickness=2, width=100, height=100, bd=0)
-        self.inputFrame.grid(row=5, column=0, sticky=tk.NSEW)
+        self.inputFrame.grid(row=6, column=0, sticky=tk.NSEW)
         
         vcmd = (self.root.register(self.validate),'%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
         
@@ -68,8 +69,8 @@ class MainClass(object):
         self.speedInput.grid(row=0, column=4, sticky=tk.NSEW)
         
         #App specific:
-        exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='cyan', height=1, width=6)
-        exitButton.grid(row=5, column=1, sticky=tk.E)
+        exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='CadetBlue4', height=1, width=6)
+        exitButton.grid(row=6, column=1, sticky=tk.E)
 
         self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
@@ -94,7 +95,7 @@ class MainClass(object):
         self.started.set (not self.started.get())
         #print(self.started.get())
         if self.started.get():
-            self.startButton.grid(row=4, sticky=tk.E)
+            self.startButton.grid(row=5, sticky=tk.E)
             self.startButton["text"] = 'Stop Hitting'
             self.startButton["bg"] = 'tomato'
             if not self.bpm.get():
@@ -102,7 +103,7 @@ class MainClass(object):
             if not self.delayPortion.get():
                 self.delayPortion.set(0.5)
         else:
-            self.startButton.grid(row=4, sticky=tk.W)
+            self.startButton.grid(row=5, sticky=tk.W)
             self.startButton["text"] = 'Start Hitting'
             self.startButton["bg"] = 'OliveDrab1'
 
