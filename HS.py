@@ -3,6 +3,8 @@ import tkinter as tk
 import tkinter.font
 import sensors as sns
 import finger as fng
+import voltmeter
+
 class MainClass(object):
 
     def __init__(self):
@@ -21,6 +23,14 @@ class MainClass(object):
         pressureLabel = tk.Label(self.root, textvariable=self.pressureVar, font=textFont)
         pressureLabel.grid(row=1, column=1)
 
+        self.voltageInputVar = tk.StringVar()
+        voltageInputLabel = tk.Label(self.root, textvariable=self.voltageInputVar, font=textFont)
+        voltageInputLabel.grid(row=4, column=1)
+
+        self.voltageOutputVar = tk.StringVar()
+        voltageOutputLabel = tk.Label(self.root, textvariable=self.voltageOutputVar, font=textFont)
+        voltageOutputLabel.grid(row=5, column=1)
+        
         self.extraDataVar = tk.StringVar()
         extraLabel = tk.Label(self.root, textvariable=self.extraDataVar, font=textFont)
         extraLabel.grid(row=6, column=1,sticky=tk.W)
