@@ -127,6 +127,7 @@ class MainClass(object):
         self.root.mainloop()        
       
     def exitProgram(self):
+        
         self.root.quit()
 
 if __name__ == "__main__":
