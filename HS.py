@@ -4,7 +4,7 @@ import tkinter.font
 import sensors as sns
 import finger as fng
 import voltmeter
-
+import logger
 class MainClass(object):
 
     def __init__(self):
@@ -84,10 +84,10 @@ class MainClass(object):
         #App specific:
         exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='CadetBlue4', height=1, width=3)
         exitButton.grid(row=6, column=1, sticky=tk.E)
+        self.logger = logger.SensorLogger(self)
 
         self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
-        
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
         if text in '0123456789.-+':
