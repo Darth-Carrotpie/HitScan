@@ -15,10 +15,10 @@ class SensorLogger():
                 values = [int(s) for s in re.findall(r'\b\d+\b', lines[i])]
                 if "days" in lines[i]:
                     self.logDaysToKeep = values[0]
-                    print("logging day storing is:",self.logDaysToKeep)
+                    print("Logging day storing is:",self.logDaysToKeep, 'days')
                 if "period" in lines[i]:
                     self.loggingPeriod = values[0] * 1000
-                    print("logging period is:",self.loggingPeriod)
+                    print("Logging period is:",values[0],'s')
             #else:
                 #print(lines[i])
         #ready vars for file management:
@@ -163,12 +163,12 @@ class SensorLogger():
         for path, dirs, files in os.walk(path):
             dirs = sorted(dirs)
             break
-        print (len(files))
+        #print (len(files))
         files = [os.path.join(path, f) for f in files] # add path to each file
         files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
         for i in range(0,len(files)):
-            print(files[i])
-            if i > 9:
+            #print(files[i])
+            if i >= self.logDaysToKeep:
                 print('removing old log file: ',files[i])
                 os.remove(files[i])
     def readOrCreateFile(self, path):
