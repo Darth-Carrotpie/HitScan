@@ -1,7 +1,7 @@
 #This file contains program specific configuration. Tags to follow: "days"; "period".
 
 #Rounded amount of days, for how many files to keep in logging history. Older than that will be deleted:
-days = 10
+days = 3
 
 #Rounded amount of seconds, how often to log:
-period = 60
+period = 10
