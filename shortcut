@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=HitScan
+Comment=To use with pneumatic HitScan system
+Exec=/home/pi/Documents/HitScan/HS.py
+Icon=/home/pi/Documents/HitScan/Resources/icon.png
+Path=/home/pi/Documents/HitScan/
+Terminal=false
+Type=Application
+Categories=Utility;Application;
