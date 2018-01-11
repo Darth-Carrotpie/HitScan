@@ -8,6 +8,8 @@ import logger
 import pygame
 from PIL import Image, ImageTk
 import os
+import webbrowser
+
 class MainClass(object):
 
     def __init__(self):
@@ -90,7 +92,6 @@ class MainClass(object):
         self.speedInput.grid(row=1, column=3, sticky=tk.NSEW)
         
         #extras - audio, video, etc:
-        #pygame.init()
         pygame.mixer.init()
         self.extrasFrame = tk.Frame(self.root, highlightbackground="RoyalBlue1", highlightcolor="RoyalBlue1", highlightthickness=2, width=100, height=100, bd=0)
         self.extrasFrame.grid(row=4, column=0, rowspan=2, sticky=tk.NSEW)
@@ -101,10 +102,20 @@ class MainClass(object):
         #get audio file list, take first, return path as string:
         audioFiles = self.getFiles(audioPath)
         #play button:
-        playStopImageLabel = tk.Button(self.extrasFrame, image=photo, font=myFont, command=lambda:self.playAudio(audioFiles[0]), bg='RoyalBlue1', height=64, width=64)
-        playStopImageLabel.grid(row=0, column=0) 
-        playStopImageLabel.image = photo # keep a reference!
-        playStopImageLabel.pack()
+        playStopButton= tk.Button(self.extrasFrame, image=photo, font=myFont, command=lambda:self.playAudio(audioFiles[0]), bg='RoyalBlue1', height=64, width=64)
+        playStopButton.grid(row=0, column=0) 
+        playStopButton.image = photo # keep a reference!
+        #playStopButton.pack()
+        #video shortcut btn:
+        imageVideo = Image.open("/home/pi/Documents/HitScan/Resources/camera.png")
+        imageVideo = imageVideo.resize((64, 64), Image.ANTIALIAS)
+        photoVideo = ImageTk.PhotoImage(imageVideo)
+        
+        url = 'http://docs.python.org/'
+        chrome_path = '/usr/bin/google-chrome %s'
+        videoButton = tk.Button(self.extrasFrame, image=photoVideo, font=myFont, command=lambda:self.openBrowserForVideo(), bg='RoyalBlue1', height=64, width=64)
+        videoButton.grid(row=0, column=1) 
+        videoButton.image = photoVideo # keep a reference!
         
         #App specific:
         exitButton=tk.Button(self.root, text='Exit', font=myFont, command=self.exitProgram, bg='CadetBlue4', height=1, width=3)
@@ -113,7 +124,12 @@ class MainClass(object):
 
         self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
-
+    def openBrowserForVideo(self):
+        url = 'http://127.0.0.1/'
+        chrome_path = '/usr/bin/chromium-browser %s'
+        webbrowser.get(chrome_path).open(url)
+        #os.system("sh /home/pi/RPi_Cam_Web_Interface/RPi_Cam_Web_Interface_Installer.sh")
+        
     def playAudio(self, fullpath):
         print (pygame.mixer.music.get_volume())
         if not pygame.mixer.music.get_busy():
