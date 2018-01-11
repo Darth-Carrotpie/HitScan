@@ -165,10 +165,11 @@ class SensorLogger():
             break
         print (len(files))
         files = [os.path.join(path, f) for f in files] # add path to each file
-        files.sort(key=lambda x: os.path.getmtime(x))
+        files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
         for i in range(0,len(files)):
             print(files[i])
-            if i > 2:
+            if i > 9:
+                print('removing old log file: ',files[i])
                 os.remove(files[i])
     def readOrCreateFile(self, path):
         try:
