@@ -1,0 +1,3 @@
+Audio device set jack,hdmi:
+amixer -c 0 cset numid=3 1
+amixer -c 0 cset numid=3 2

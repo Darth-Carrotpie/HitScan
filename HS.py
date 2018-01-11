@@ -7,6 +7,7 @@ import voltmeter
 import logger
 import pygame
 from PIL import Image, ImageTk
+import os
 class MainClass(object):
 
     def __init__(self):
@@ -89,16 +90,18 @@ class MainClass(object):
         self.speedInput.grid(row=1, column=3, sticky=tk.NSEW)
         
         #extras - audio, video, etc:
+        #pygame.init()
+        pygame.mixer.init()
         self.extrasFrame = tk.Frame(self.root, highlightbackground="RoyalBlue1", highlightcolor="RoyalBlue1", highlightthickness=2, width=100, height=100, bd=0)
-        self.extrasFrame.grid(row=4, column=0, rowspan=2, sticky=tk.NSEW)        
+        self.extrasFrame.grid(row=4, column=0, rowspan=2, sticky=tk.NSEW)
         image = Image.open("/home/pi/Documents/HitScan/Resources/playstop.ico")
         image = image.resize((64, 64), Image.ANTIALIAS)
         photo = ImageTk.PhotoImage(image)
         audioPath = "/home/pi/Documents/HitScan/Audio"
         #get audio file list, take first, return path as string:
-######
+        audioFiles = self.getFiles(audioPath)
         #play button:
-        playStopImageLabel = tk.Button(self.extrasFrame, image=photo, font=myFont, command=lambda:self.playAudio(path), bg='RoyalBlue1', height=64, width=64)
+        playStopImageLabel = tk.Button(self.extrasFrame, image=photo, font=myFont, command=lambda:self.playAudio(audioFiles[0]), bg='RoyalBlue1', height=64, width=64)
         playStopImageLabel.grid(row=0, column=0) 
         playStopImageLabel.image = photo # keep a reference!
         playStopImageLabel.pack()
@@ -110,11 +113,24 @@ class MainClass(object):
 
         self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
+
+    def playAudio(self, fullpath):
+        print (pygame.mixer.music.get_volume())
+        if not pygame.mixer.music.get_busy():
+            print('playing: ',fullpath)
+            pygame.mixer.music.load(fullpath)
+            pygame.mixer.music.play() #loops=-1
+        else:
+            pygame.mixer.music.stop()        
         
-    def playAudio(self, path):
-        pygame.mixer.music.load(fullpath)
-	pygame.mixer.music.play()
-	
+    def getFiles(self, path):
+        files = None
+        for path, dirs, files in os.walk(path):
+            dirs = sorted(dirs)
+            break
+        #print (len(files))
+        files = [os.path.join(path, f) for f in files] # add path to each file
+        return files
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
         if text in '0123456789.-+':
@@ -153,12 +169,9 @@ class MainClass(object):
         # start the GUI loop
         self.root.mainloop()        
       
-    def exitProgram(self):
-        
+    def exitProgram(self):        
         self.root.quit()
 
 if __name__ == "__main__":
     app = MainClass()
     app.start()
-
-
