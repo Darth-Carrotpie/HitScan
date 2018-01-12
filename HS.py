@@ -95,9 +95,10 @@ class MainClass(object):
         pygame.mixer.init()
         #os.system("sudo killall pigpiod")
         #os.system("sudo pigpiod")
-        pi = pigpio.pi() # Connect to local Pi.
+        self.pi = pigpio.pi() # Connect to local Pi.
+        self.pi.write(23, 1)
         #print(pi.get_mode(18))
-        pi.set_mode(18, pigpio.ALT5)
+        self.pi.set_mode(18, pigpio.ALT5)
         self.extrasFrame = tk.Frame(self.root, highlightbackground="RoyalBlue1", highlightcolor="RoyalBlue1", highlightthickness=2, width=100, height=100, bd=0)
         self.extrasFrame.grid(row=4, column=0, rowspan=2, sticky=tk.NSEW)
         image = Image.open("/home/pi/Documents/HitScan/Resources/playstop.ico")
@@ -138,11 +139,13 @@ class MainClass(object):
     def playAudio(self, fullpath):
         print (pygame.mixer.music.get_volume())
         if not pygame.mixer.music.get_busy():
+            self.pi.write(23, 0)
             print('playing: ',fullpath)
             pygame.mixer.music.load(fullpath)
             pygame.mixer.music.play() #loops=-1
         else:
-            pygame.mixer.music.stop()        
+            pygame.mixer.music.stop()
+            self.pi.write(23, 1)
         
     def getFiles(self, path):
         files = None
