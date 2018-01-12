@@ -1,3 +1,4 @@
 Audio device set jack,hdmi:
 amixer -c 0 cset numid=3 1
 amixer -c 0 cset numid=3 2
+Camera Setup: http://www.raspberry-pi-geek.com/Archive/2016/15/Using-the-RPi-Cam-Web-Interface

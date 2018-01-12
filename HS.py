@@ -125,8 +125,8 @@ class MainClass(object):
         self.sensor = sns.THSensor(self)
         self.finger = fng.Control(self)
     def openBrowserForVideo(self):
-        url = 'http://127.0.0.1/'
-        chrome_path = '/usr/bin/chromium-browser %s'
+        url = "http://127.0.0.1/html/"
+        chrome_path = "/usr/bin/chromium-browser %s"
         webbrowser.get(chrome_path).open(url)
         #os.system("sh /home/pi/RPi_Cam_Web_Interface/RPi_Cam_Web_Interface_Installer.sh")
         
