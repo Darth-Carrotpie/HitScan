@@ -9,7 +9,7 @@ import pygame
 from PIL import Image, ImageTk
 import os
 import webbrowser
-
+import pigpio
 class MainClass(object):
 
     def __init__(self):
@@ -93,6 +93,11 @@ class MainClass(object):
         
         #extras - audio, video, etc:
         pygame.mixer.init()
+        #os.system("sudo killall pigpiod")
+        #os.system("sudo pigpiod")
+        pi = pigpio.pi() # Connect to local Pi.
+        #print(pi.get_mode(18))
+        pi.set_mode(18, pigpio.ALT5)
         self.extrasFrame = tk.Frame(self.root, highlightbackground="RoyalBlue1", highlightcolor="RoyalBlue1", highlightthickness=2, width=100, height=100, bd=0)
         self.extrasFrame.grid(row=4, column=0, rowspan=2, sticky=tk.NSEW)
         image = Image.open("/home/pi/Documents/HitScan/Resources/playstop.ico")
